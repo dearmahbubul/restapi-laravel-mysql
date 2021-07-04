@@ -21,11 +21,12 @@ class BaseTestHelper extends TestCase
         $user = User::factory()->create([
             'password' => bcrypt($password = 'password'),
         ]);
-        return $this->post(route('user.login'), [
+        $response = $this->post(route('user.login'), [
             'email' => $user->email,
             'password' => $password,
             'company_id' => $user->company_id
         ]);
+        return $response->json('payload');
     }
 
     protected function getAccessToken()

@@ -53,7 +53,8 @@ class UserValidator extends BaseRequestValidator
     public function setPasswordChangeRules()
     {
         $this->rules = array(
-            'password' => 'required|confirmed|min:8|max:64',
+            'password' => 'required|min:8|max:64',
+            'password_confirmation' => 'required|min:8|max:64|same:password',
         );
     }
 

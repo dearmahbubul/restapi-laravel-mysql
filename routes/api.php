@@ -19,7 +19,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('logout', [UserAuthController::class, 'logout']);
         Route::post('refresh-token', [UserAuthController::class, 'refresh'])->name('refresh.token');
         Route::get('user', [UserAuthController::class, 'me'])->name('user.me');
-        Route::put('user/password/update/{id}', [UserAuthController::class, 'changePassword']);
-        Route::put('user/update/{id}', [UserAuthController::class, 'updateUser']);
+        Route::put('user/password/update/{id}', [UserAuthController::class, 'changePassword'])->name('user.update.password');
+        Route::put('user/update/{id}', [UserAuthController::class, 'updateUser'])->name('user.update');
     });
 });

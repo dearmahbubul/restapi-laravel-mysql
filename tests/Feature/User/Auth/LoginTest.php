@@ -12,9 +12,10 @@ namespace Tests\Feature\User\Auth;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
-use Tests\Feature\BaseTestHelper;
+use Illuminate\Testing\TestResponse;
+use Tests\TestCase;
 
-class LoginTest extends BaseTestHelper
+class LoginTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -87,7 +88,7 @@ class LoginTest extends BaseTestHelper
     /** @test */
     public function get_access_key_token_if_get_logged_in()
     {
-        /*$user = User::factory()->create([
+        $user = User::factory()->create([
             'password' => bcrypt($password = 'password'),
         ]);
 
@@ -99,8 +100,8 @@ class LoginTest extends BaseTestHelper
 
         $data = $response->json([
             'payload'
-        ]);*/
-        $data = $this->getLoggedInUser();
+        ]);
+
         if(isset($data['token'])) {
             $this->assertTrue(true);
         } else {
