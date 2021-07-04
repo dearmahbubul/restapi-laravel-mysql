@@ -1,0 +1,1118 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Happy App Backend Api",
+        "contact": {
+            "name": "Mahbubul Alam",
+            "email": "mahbubulalam5676@gmail.com"
+        },
+        "version": "1"
+    },
+    "paths": {
+        "/api/v1/login": {
+            "post": {
+                "tags": [
+                    "User RestApi"
+                ],
+                "summary": "Sign in",
+                "description": "Login by email, password",
+                "operationId": "authLogin",
+                "requestBody": {
+                    "description": "Pass user credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "company_id": {
+                                        "type": "int",
+                                        "format": "number",
+                                        "example": "1"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "mahbubul@orangetoolz.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Correct credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "payload": {
+                                            "type": "collection",
+                                            "example": {
+                                                "user": {
+                                                    "id": 1,
+                                                    "company_id": 1,
+                                                    "is_parent": 1,
+                                                    "name": "Mahbubul Alam",
+                                                    "email": "mahbubul@orangetoolz.com",
+                                                    "email_verified_at": "2021-07-04T09:28:02.000000Z",
+                                                    "phone_number": "01906043504",
+                                                    "profile_image": null,
+                                                    "email_signature": null,
+                                                    "logged_at": null,
+                                                    "status": 1,
+                                                    "created_at": "2021-07-04T09:28:02.000000Z",
+                                                    "updated_at": "2021-07-04T09:28:02.000000Z"
+                                                },
+                                                "token": {
+                                                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hcGkucmFsbGUudGVzdFwvYXBpXC92MVwvbG9naW4iLCJpYXQiOjE2MjQ2MzA5MDcsImV4cCI6MTYyNDYzNDUwNywibmJmIjoxNjI0NjMwOTA3LCJqdGkiOiJ6cE80VDdBVUJRbjMyRkU5Iiwic3ViIjoxLCJwcnYiOiJiOTEyNzk5NzhmMTFhYTdiYzU2NzA0ODdmZmYwMWUyMjgyNTNmZTQ4In0.egbMdLZlfz_WKyQj7rPsqn6Y0ynxHWKvhdfDABD1gXQ",
+                                                    "token_type": "bearer",
+                                                    "expires_in": 3600
+                                                }
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Successfully logged in"
+                                        },
+                                        "status": {
+                                            "type": "bool",
+                                            "example": "true"
+                                        },
+                                        "status_code": {
+                                            "type": "int",
+                                            "example": "200"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "payload": {
+                                            "type": "null",
+                                            "example": "null"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong email address or password. Please try again"
+                                        },
+                                        "status": {
+                                            "type": "bool",
+                                            "example": "false"
+                                        },
+                                        "status_code": {
+                                            "type": "int",
+                                            "example": "401"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "payload": {
+                                            "type": "collection",
+                                            "example": {
+                                                "email": [
+                                                    "The email must be at least 8 characters.",
+                                                    "The email must be a valid email address."
+                                                ],
+                                                "password": [
+                                                    "The password must be at least 8 characters."
+                                                ]
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Given data is invalid"
+                                        },
+                                        "status": {
+                                            "type": "bool",
+                                            "example": "false"
+                                        },
+                                        "status_code": {
+                                            "type": "int",
+                                            "example": "422"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/forget-password": {
+            "post": {
+                "tags": [
+                    "User RestApi"
+                ],
+                "summary": "Forget password",
+                "description": "Forget password request to set new password",
+                "operationId": "passwordReset",
+                "requestBody": {
+                    "description": "Pass user credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email"
+                                ],
+                                "properties": {
+                                    "company_id": {
+                                        "type": "int",
+                                        "format": "number",
+                                        "example": "1"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user1@mail.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Valid email password reset request, this will send a link to your email to reset your password",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "payload": {
+                                            "type": "collection",
+                                            "example": "null"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "We have emailed your password reset link"
+                                        },
+                                        "status": {
+                                            "type": "bool",
+                                            "example": "true"
+                                        },
+                                        "status_code": {
+                                            "type": "int",
+                                            "example": "200"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Wrong email request response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "payload": {
+                                            "type": "collection",
+                                            "example": "null"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User data not found"
+                                        },
+                                        "status": {
+                                            "type": "bool",
+                                            "example": "true"
+                                        },
+                                        "status_code": {
+                                            "type": "int",
+                                            "example": "404"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "payload": {
+                                            "type": "collection",
+                                            "example": {
+                                                "email": [
+                                                    "The email must be a valid email address."
+                                                ]
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Given data is invalid"
+                                        },
+                                        "status": {
+                                            "type": "bool",
+                                            "example": "false"
+                                        },
+                                        "status_code": {
+                                            "type": "int",
+                                            "example": "422"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/reset-password": {
+            "post": {
+                "tags": [
+                    "User RestApi"
+                ],
+                "summary": "Reset password",
+                "description": "Reset your password from the emailed link",
+                "operationId": "passwordReset",
+                "requestBody": {
+                    "description": "Pass user credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "token",
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user1@mail.com"
+                                    },
+                                    "company_id": {
+                                        "type": "int",
+                                        "format": "number",
+                                        "example": "1"
+                                    },
+                                    "token": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "23232dsafdasdfa2323233"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "12345678"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "12345678"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successfull password reset response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "payload": {
+                                            "type": "collection",
+                                            "example": "null"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Your password has been reset successfully"
+                                        },
+                                        "status": {
+                                            "type": "bool",
+                                            "example": "true"
+                                        },
+                                        "status_code": {
+                                            "type": "int",
+                                            "example": "201"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "payload": {
+                                            "type": "collection",
+                                            "example": {
+                                                "token": [
+                                                    "The token field is required."
+                                                ],
+                                                "email": [
+                                                    "The email must be a valid email address."
+                                                ],
+                                                "password": [
+                                                    "The password confirmation does not match.",
+                                                    "The password must be at least 8 characters."
+                                                ]
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Given data is invalid"
+                                        },
+                                        "status": {
+                                            "type": "bool",
+                                            "example": "false"
+                                        },
+                                        "status_code": {
+                                            "type": "int",
+                                            "example": "422"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid token response, User should be authorized to access this route",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "payload": {
+                                            "type": "null",
+                                            "example": "null"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Token is invalid"
+                                        },
+                                        "status": {
+                                            "type": "bool",
+                                            "example": "false"
+                                        },
+                                        "status_code": {
+                                            "type": "int",
+                                            "example": "401"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/signup": {
+            "post": {
+                "tags": [
+                    "User RestApi"
+                ],
+                "summary": "Signup",
+                "description": "Register new user by admin. Register by name, email, password, phone_number",
+                "operationId": "authSignup",
+                "requestBody": {
+                    "description": "Pass user credentials. If company id given then need is_super property to make sub-user. If new company then need to provide comapny_name not company_id",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "phone_number",
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Mahbubul Alam"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user1@mail.com"
+                                    },
+                                    "company_id": {
+                                        "type": "int",
+                                        "format": "number",
+                                        "example": "1"
+                                    },
+                                    "is_super": {
+                                        "type": "int",
+                                        "format": "number",
+                                        "example": "0"
+                                    },
+                                    "company_name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Orangetoolz"
+                                    },
+                                    "phone_number": {
+                                        "type": "string",
+                                        "format": "mobile",
+                                        "example": "01774573275"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "12345678"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "12345678"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successfull signup/registration response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "payload": {
+                                            "type": "collection",
+                                            "example": {
+                                                "name": "Mahbubul",
+                                                "email": "mahbubul@masakh.xyz",
+                                                "company_id": "1",
+                                                "is_super": "0",
+                                                "phone_number": "01774753432",
+                                                "updated_at": "2021-06-25T19:19:36.000000Z",
+                                                "created_at": "2021-06-25T19:19:36.000000Z",
+                                                "id": 2
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Signup successfully completed"
+                                        },
+                                        "status": {
+                                            "type": "bool",
+                                            "example": "true"
+                                        },
+                                        "status_code": {
+                                            "type": "int",
+                                            "example": "201"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "payload": {
+                                            "type": "collection",
+                                            "example": {
+                                                "name": [
+                                                    "The name field is required."
+                                                ],
+                                                "email": [
+                                                    "The email must be a valid email address."
+                                                ],
+                                                "phone_number": [
+                                                    "The phone number must be at least 10 characters."
+                                                ],
+                                                "password": [
+                                                    "The password confirmation does not match.",
+                                                    "The password must be at least 8 characters."
+                                                ]
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Given data is invalid"
+                                        },
+                                        "status": {
+                                            "type": "bool",
+                                            "example": "false"
+                                        },
+                                        "status_code": {
+                                            "type": "int",
+                                            "example": "422"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid token response, User should be authorized to access this route",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "payload": {
+                                            "type": "null",
+                                            "example": "null"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Token is invalid"
+                                        },
+                                        "status": {
+                                            "type": "bool",
+                                            "example": "false"
+                                        },
+                                        "status_code": {
+                                            "type": "int",
+                                            "example": "401"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/me": {
+            "get": {
+                "tags": [
+                    "User RestApi"
+                ],
+                "summary": "Logged user information",
+                "description": "Get logged user information",
+                "operationId": "authInformation",
+                "responses": {
+                    "200": {
+                        "description": "Valid logged user response. Bearer token should be correct",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "payload": {
+                                            "type": "collection",
+                                            "example": {
+                                                "id": 1,
+                                                "company_id": 1,
+                                                "is_parent": 1,
+                                                "name": "Mahbubul Alam",
+                                                "email": "mahbubul@orangetoolz.com",
+                                                "email_verified_at": "2021-07-04T09:28:02.000000Z",
+                                                "phone_number": "01906043504",
+                                                "profile_image": null,
+                                                "email_signature": null,
+                                                "logged_at": null,
+                                                "status": 1,
+                                                "created_at": "2021-07-04T09:28:02.000000Z",
+                                                "updated_at": "2021-07-04T09:28:02.000000Z"
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Logged user fetched"
+                                        },
+                                        "status": {
+                                            "type": "bool",
+                                            "example": "true"
+                                        },
+                                        "status_code": {
+                                            "type": "int",
+                                            "example": "200"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid token response, User should be authorized to access this route",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "payload": {
+                                            "type": "null",
+                                            "example": "null"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Token is invalid"
+                                        },
+                                        "status": {
+                                            "type": "bool",
+                                            "example": "false"
+                                        },
+                                        "status_code": {
+                                            "type": "int",
+                                            "example": "401"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/logout": {
+            "get": {
+                "tags": [
+                    "User RestApi"
+                ],
+                "summary": "Signout",
+                "description": "User logged out and invlaidate token",
+                "operationId": "signOut",
+                "responses": {
+                    "200": {
+                        "description": "Logged out successfull response. Bearer token should be correct",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "payload": {
+                                            "type": "collection",
+                                            "example": "null"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Successfully logged out from the system"
+                                        },
+                                        "status": {
+                                            "type": "bool",
+                                            "example": "true"
+                                        },
+                                        "status_code": {
+                                            "type": "int",
+                                            "example": "200"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid token response, User should be authorized to access this route",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "payload": {
+                                            "type": "null",
+                                            "example": "null"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Token is invalid"
+                                        },
+                                        "status": {
+                                            "type": "bool",
+                                            "example": "false"
+                                        },
+                                        "status_code": {
+                                            "type": "int",
+                                            "example": "401"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/user/password/update/{id}": {
+            "put": {
+                "tags": [
+                    "User RestApi"
+                ],
+                "summary": "Update user password",
+                "description": "Update user password",
+                "operationId": "userPasswordUpdate",
+                "requestBody": {
+                    "description": "Update user informations",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "12345678"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "12345678"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successfull updated password response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "payload": {
+                                            "type": "collection",
+                                            "example": "null"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Password is successfully updated"
+                                        },
+                                        "status": {
+                                            "type": "bool",
+                                            "example": "true"
+                                        },
+                                        "status_code": {
+                                            "type": "int",
+                                            "example": "201"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "payload": {
+                                            "type": "collection",
+                                            "example": {
+                                                "password": [
+                                                    "The password confirmation does not match.",
+                                                    "The password must be at least 8 characters."
+                                                ]
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Given data is invalid"
+                                        },
+                                        "status": {
+                                            "type": "bool",
+                                            "example": "false"
+                                        },
+                                        "status_code": {
+                                            "type": "int",
+                                            "example": "422"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid token response, User should be authorized to access this route",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "payload": {
+                                            "type": "null",
+                                            "example": "null"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Token is invalid"
+                                        },
+                                        "status": {
+                                            "type": "bool",
+                                            "example": "false"
+                                        },
+                                        "status_code": {
+                                            "type": "int",
+                                            "example": "401"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "If athenticated user inspect and pushed other user id to change password then it will be a bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "payload": {
+                                            "type": "null",
+                                            "example": "null"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Access denied"
+                                        },
+                                        "status": {
+                                            "type": "bool",
+                                            "example": "false"
+                                        },
+                                        "status_code": {
+                                            "type": "int",
+                                            "example": "401"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/user/update/{id}": {
+            "put": {
+                "tags": [
+                    "User RestApi"
+                ],
+                "summary": "Update User",
+                "description": "Update user information like name, email, phone_number etc",
+                "operationId": "userUpdate",
+                "requestBody": {
+                    "description": "Update user informations",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "phone_number"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Mahbubul Alam"
+                                    },
+                                    "company_id": {
+                                        "type": "int",
+                                        "format": "number",
+                                        "example": "1"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user1@mail.com"
+                                    },
+                                    "phone_number": {
+                                        "type": "string",
+                                        "format": "mobile",
+                                        "example": "01774573275"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successfull update response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "payload": {
+                                            "type": "collection",
+                                            "example": {
+                                                "id": 1,
+                                                "company_id": 1,
+                                                "is_parent": 1,
+                                                "name": "Mahbubul Alam",
+                                                "email": "mahbubul@orangetoolz.com",
+                                                "email_verified_at": "2021-07-04T09:28:02.000000Z",
+                                                "phone_number": "01906043504",
+                                                "profile_image": null,
+                                                "email_signature": null,
+                                                "logged_at": null,
+                                                "status": 1,
+                                                "created_at": "2021-07-04T09:28:02.000000Z",
+                                                "updated_at": "2021-07-04T09:28:02.000000Z"
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User is successfully updated"
+                                        },
+                                        "status": {
+                                            "type": "bool",
+                                            "example": "true"
+                                        },
+                                        "status_code": {
+                                            "type": "int",
+                                            "example": "201"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "payload": {
+                                            "type": "collection",
+                                            "example": {
+                                                "name": [
+                                                    "The name field is required."
+                                                ],
+                                                "email": [
+                                                    "The email must be a valid email address."
+                                                ],
+                                                "phone_number": [
+                                                    "The phone number must be at least 10 characters."
+                                                ]
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Given data is invalid"
+                                        },
+                                        "status": {
+                                            "type": "bool",
+                                            "example": "false"
+                                        },
+                                        "status_code": {
+                                            "type": "int",
+                                            "example": "422"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid token response, User should be authorized to access this route",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "payload": {
+                                            "type": "null",
+                                            "example": "null"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Token is invalid"
+                                        },
+                                        "status": {
+                                            "type": "bool",
+                                            "example": "false"
+                                        },
+                                        "status_code": {
+                                            "type": "int",
+                                            "example": "401"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}

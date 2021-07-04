@@ -11,6 +11,9 @@
 const STATUS_INACTIVE = 0;
 const STATUS_ACTIVE   = 1;
 
+// For user
+const PARENT_USER = 1;
+const NOT_PARENT_USER = 0;
 // For leave
 const NOT_EMERGENCY_LEAVE = 0;
 const EMERGENCY_LEAVE = 1;
