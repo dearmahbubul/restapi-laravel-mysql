@@ -320,7 +320,7 @@ class UserAuthController extends BaseController
 
     /**
      * @OA\Get (
-     * path="/api/v1/me",
+     * path="/api/v1/user",
      * summary="Logged user information",
      * description="Get logged user information",
      * operationId="authInformation",

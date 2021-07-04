@@ -627,7 +627,7 @@
                 ]
             }
         },
-        "/api/v1/me": {
+        "/api/v1/user": {
             "get": {
                 "tags": [
                     "User RestApi"
